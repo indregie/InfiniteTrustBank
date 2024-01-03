@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
@@ -6,6 +7,8 @@ public static class DependencyInjection
 {
     public static void AddApplication(this IServiceCollection services)
     {
-        //services.AddTransient<TodoService>();
+        services.AddTransient<UserService>();
+        services.AddTransient<AccountService>();
+        services.AddTransient<TransactionService>();
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace Domain.Entities;
+﻿namespace Domain.Dtos.Response;
 
-public class TransactionEntity
+public class Transaction
 {
     public Guid Id { get; set; }
     public int TransactionTypeId { get; set; }

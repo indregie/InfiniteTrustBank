@@ -2,4 +2,4 @@
 VALUES ('Saving'), ('Default');
 
 INSERT INTO public.transaction_types (name)
-VALUES ('ServiceFee'), ('Topup'), ('Send'), ('Received');
+VALUES ('ServiceFee'), ('Topup'), ('Transfer');

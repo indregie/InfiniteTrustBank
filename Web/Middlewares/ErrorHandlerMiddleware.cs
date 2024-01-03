@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Domain.Exceptions;
+using System.Net;
 using System.Text.Json;
 
 namespace Web.Middlewares;
@@ -27,9 +28,20 @@ public class ErrorHandlerMiddleware
 
             switch (error)
             {
-                case KeyNotFoundException e:
-                    // not found error
+                case UserNotFoundException e:
                     response.StatusCode = (int)HttpStatusCode.NotFound;
+                    break;
+                case AccountNotFoundException e:
+                    response.StatusCode = (int)HttpStatusCode.NotFound;
+                    break;
+                case AccountsLimitException e:
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+                case NegativeAmountException e:
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+                case InsufficientFundsException e:
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
                 default:
                     // unhandled error

@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS public.users
 CREATE TABLE IF NOT EXISTS public.accounts
 (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
-    acc_number character varying COLLATE pg_catalog."default" NOT NULL,
     balance numeric NOT NULL DEFAULT 0,
     type_id integer NOT NULL,
     user_id uuid NOT NULL,

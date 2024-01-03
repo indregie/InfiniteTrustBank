@@ -1,6 +1,8 @@
 using Application;
 using Infrastructure;
 using Infrastructure.Repositories;
+using Npgsql;
+using System.Data;
 using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+var connectionString = builder.Configuration.GetConnectionString("PostgreConnection");
+builder.Services.AddScoped<IDbConnection>(sp => new NpgsqlConnection(connectionString));
 
 
 var app = builder.Build();

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure;
 
@@ -6,7 +7,8 @@ public static class DependencyInjection
 {
     public static void AddInfrastructure(this IServiceCollection services)
     {
-        //services.AddTransient<ITodoRepository, TodoRepository>();
-        //services.AddHttpClient();
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IAccountRepository, AccountRepository>();
+        services.AddTransient<ITransactionRepository, TransactionRepository>();
     }
 }
