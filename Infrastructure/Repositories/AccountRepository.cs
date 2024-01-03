@@ -15,7 +15,8 @@ public class AccountRepository : IAccountRepository
 
     public async Task<AccountEntity?> GetAccountByIdAsync(Guid id)
     {
-        string sql = "SELECT id as Id, balance as Balance, type_id as TypeId, user_id as UserId FROM public.accounts WHERE id = @Id AND is_deleted=false";
+        string sql = "SELECT id as Id, balance as Balance, type_id as TypeId, user_id as UserId " +
+            "FROM public.accounts WHERE id = @Id AND is_deleted=false";
         var queryObject = new
         {
             Id = id
@@ -25,7 +26,8 @@ public class AccountRepository : IAccountRepository
 
     public async Task<AccountEntity?> CreateAccountAsync(AccountEntity account)
     {
-        string sql = "INSERT INTO public.accounts (type_id, user_id) VALUES (@TypeId, @UserId) RETURNING id as Id, type_id as TypeId, user_id as UserId";
+        string sql = "INSERT INTO public.accounts (type_id, user_id) VALUES (@TypeId, @UserId) " +
+            "RETURNING id as Id, type_id as TypeId, user_id as UserId";
         var queryObject = new
         {
             TypeId = account.TypeId,

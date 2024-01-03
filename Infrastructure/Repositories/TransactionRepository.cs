@@ -40,34 +40,34 @@ public class TransactionRepository : ITransactionRepository
                 var result = await _connection.ExecuteAsync(sql, queryObject, transaction: transactionSql);
             }
             {
-                string sql = "INSERT INTO public.transactions (transaction_type_id, sum, sender_acc_id, receiver_acc_id) " +
-                    "VALUES (1, 1, @SenderAccountId, @SenderAccountId) ";
+                string sql = @"INSERT INTO public.transactions (transaction_type_id, sum, sender_acc_id, receiver_acc_id) 
+                    VALUES (1, 1, @senderAccountId, @senderAccountId) ";
                 var queryObject = new
                 {
-                    SenderAccountId = transaction.SenderAccountId
+                    senderAccountId = transaction.SenderAccountId
                 };
 
                 var result = await _connection.ExecuteAsync(sql, queryObject, transaction: transactionSql);
             }
             {
-                string sql = "UPDATE public.accounts SET balance=balance-1 WHERE id = @SenderAccountId";
+                string sql = "UPDATE public.accounts SET balance=balance-1 WHERE id = @senderAccountId";
                 var queryObject = new
                 {
-                    SenderAccountId = transaction.SenderAccountId
+                    senderAccountId = transaction.SenderAccountId
                 };
 
                 var result = await _connection.ExecuteAsync(sql, queryObject, transaction: transactionSql);
             }
             {
                 string sql = "INSERT INTO public.transactions (transaction_type_id, sum, sender_acc_id, receiver_acc_id) " +
-                "VALUES (3, @Sum, @SenderAccountId, @ReceiverAccountId) " +
+                "VALUES (3, @sum, @senderAccountId, @receiverAccountId) " +
                 "RETURNING id as Id, transaction_type_id as TransactionTypeId, sum as Sum, " +
                 "sender_acc_id as SenderAccountId, receiver_acc_id as ReceiverAccountId";
                 var queryObject = new
                 {
-                    Sum = transaction.Sum,
-                    SenderAccountId = transaction.SenderAccountId,
-                    ReceiverAccountId = transaction.ReceiverAccountId
+                    sum = transaction.Sum,
+                    senderAccountId = transaction.SenderAccountId,
+                    receiverAccountId = transaction.ReceiverAccountId
                 };
 
                 var result = await _connection.QueryFirstOrDefaultAsync<TransactionEntity>(sql, queryObject, transaction: transactionSql);
@@ -94,14 +94,14 @@ public class TransactionRepository : ITransactionRepository
             }
             {
                 string sql = "INSERT INTO public.transactions (transaction_type_id, sum, sender_acc_id, receiver_acc_id) " +
-                "VALUES (2, @Sum, @SenderAccountId, @ReceiverAccountId) " +
+                "VALUES (2, @sum, @senderAccountId, @receiverAccountId) " +
                 "RETURNING id as Id, transaction_type_id as TransactionTypeId, sum as Sum, " +
                 "sender_acc_id as SenderAccountId, receiver_acc_id as ReceiverAccountId";
                 var queryObject = new
                 {
-                    Sum = transaction.Sum,
-                    SenderAccountId = transaction.SenderAccountId,
-                    ReceiverAccountId = transaction.ReceiverAccountId
+                    sum = transaction.Sum,
+                    senderAccountId = transaction.SenderAccountId,
+                    receiverAccountId = transaction.ReceiverAccountId
                 };
 
                 var result = await _connection.QueryFirstOrDefaultAsync<TransactionEntity>(sql, queryObject, transaction: transactionSql);

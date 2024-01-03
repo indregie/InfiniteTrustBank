@@ -24,8 +24,8 @@ public class TransactionService
             throw new NegativeAmountException();
         }
 
-        var senderAccount = await _accountService.GetById(transaction.SenderAccountId);
-        var receiverAccount = await _accountService.GetById(transaction.ReceiverAccountId);
+        Account senderAccount = await _accountService.GetById(transaction.SenderAccountId);
+        Account receiverAccount = await _accountService.GetById(transaction.ReceiverAccountId);
         if (senderAccount == null || receiverAccount == null)
         {
             throw new AccountNotFoundException();
@@ -64,15 +64,10 @@ public class TransactionService
             throw new NegativeAmountException();
         }
 
-        var senderAccount = await _accountService.GetById(transaction.AccountId);
+        Account senderAccount = await _accountService.GetById(transaction.AccountId);
         if (senderAccount == null)
         {
             throw new AccountNotFoundException();
-        }
-
-        if (senderAccount.Balance < transaction.Sum + 1)
-        {
-            throw new InsufficientFundsException();
         }
 
         TransactionEntity transEn = new TransactionEntity()
@@ -98,7 +93,7 @@ public class TransactionService
 
     public async Task<IEnumerable<Transaction>> GetByUser(Guid id)
     {
-        IEnumerable<TransactionEntity> userTransactions = await _transactionRepository.GetUserTransactionsAsync(id);
+        IEnumerable<TransactionEntity?> userTransactions = await _transactionRepository.GetUserTransactionsAsync(id);
         IEnumerable<Transaction> responseTransactions = userTransactions
             .Select(transaction => new Transaction
             {
