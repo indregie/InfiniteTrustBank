@@ -63,4 +63,13 @@ public class AccountService
 
         return response;
     }
+
+    public async Task Delete(Guid id)
+    {
+        if (await GetById(id) == null)
+        {
+            throw new AccountNotFoundException();
+        }
+        await _accountRepository.DeleteAsync(id);
+    }
 }

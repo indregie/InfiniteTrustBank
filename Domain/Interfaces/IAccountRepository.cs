@@ -6,5 +6,6 @@ namespace Infrastructure.Repositories
     {
         Task<AccountEntity?> CreateAccountAsync(AccountEntity account);
         Task<AccountEntity?> GetAccountByIdAsync(Guid id);
+        Task DeleteAsync(Guid id);
     }
 }

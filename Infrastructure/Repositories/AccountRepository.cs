@@ -33,4 +33,15 @@ public class AccountRepository : IAccountRepository
         };
         return await _connection.QueryFirstOrDefaultAsync<AccountEntity?>(sql, queryObject);
     }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        string sql = "UPDATE public.accounts SET is_deleted = true WHERE id=@Id";
+        var queryObject = new
+        {
+            Id = id
+        };
+
+        await _connection.ExecuteAsync(sql, queryObject);
+    }
 }

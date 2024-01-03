@@ -15,7 +15,6 @@ public class AccountController : Controller
         _accountService = accountService;
     }
 
-
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
@@ -27,5 +26,12 @@ public class AccountController : Controller
     {
         var accountCreated = await _accountService.Create(account);
         return CreatedAtAction("Post", new { id = accountCreated.Id });
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _accountService.Delete(id);
+        return NoContent();
     }
 }
