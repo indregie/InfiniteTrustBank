@@ -16,9 +16,9 @@ public class TransactionController : Controller
     }
 
     [HttpGet("{user_id}")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(Guid user_id)
     {
-        return Ok();
+        return Ok(await _transactionService.GetByUser(user_id));
     }
 
     [HttpPost("/Transfer")]

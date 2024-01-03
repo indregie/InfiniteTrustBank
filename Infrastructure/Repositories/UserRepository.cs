@@ -43,6 +43,7 @@ public class UserRepository : IUserRepository
     public async Task<IEnumerable<AccountEntity?>> GetUserAccountsAsync(Guid id)
     {
         string sql = "SELECT id as Id, balance as Balance, type_id as TypeId, user_id as UserId FROM public.accounts WHERE user_id = @Id AND is_deleted = false";
+
         var queryObject = new
         {
             Id = id

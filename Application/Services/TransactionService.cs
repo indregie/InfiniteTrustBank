@@ -95,4 +95,19 @@ public class TransactionService
 
         return response;
     }
+
+    public async Task<IEnumerable<Transaction>> GetByUser(Guid id)
+    {
+        IEnumerable<TransactionEntity> userTransactions = await _transactionRepository.GetUserTransactionsAsync(id);
+        IEnumerable<Transaction> responseTransactions = userTransactions
+            .Select(transaction => new Transaction
+            {
+                Id = transaction.Id,
+                TransactionTypeId = transaction.TransactionTypeId,
+                Sum = transaction.Sum,
+                SenderAccountId = transaction.SenderAccountId,
+                ReceiverAccountId = transaction.ReceiverAccountId
+            });
+        return responseTransactions;
+    }
 }

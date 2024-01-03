@@ -110,4 +110,24 @@ public class TransactionRepository : ITransactionRepository
             }
         }
     }
+
+    public async Task<IEnumerable<TransactionEntity?>> GetUserTransactionsAsync(Guid id)
+    {
+        string sql = "SELECT DISTINCT transactions.id AS Id, " +
+            "transactions.transaction_type_id AS TransactionTypeId, " +
+            "transactions.sum AS Sum, " +
+            "transactions.sender_acc_id AS SenderAccountId, " +
+            "transactions.receiver_acc_id AS ReceiverAccountId " +
+            "FROM transactions " +
+            "JOIN accounts AS sender_accounts ON transactions.sender_acc_id = sender_accounts.id " +
+            "JOIN accounts AS receiver_accounts ON transactions.receiver_acc_id = receiver_accounts.id " +
+            "JOIN users ON (sender_accounts.user_id = users.id OR receiver_accounts.user_id = users.id) " +
+            "WHERE users.id = @Id AND transactions.sender_acc_id <> transactions.receiver_acc_id;";
+        var queryObject = new
+        {
+            Id = id
+        };
+        var result = await _connection.QueryAsync<TransactionEntity?>(sql, queryObject);
+        return result;
+    }
 }
